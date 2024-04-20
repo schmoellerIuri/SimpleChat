@@ -34,4 +34,4 @@ Este modal permite iniciar conversas com qualquer usuário, bastando selecionar 
 
 ## Versão em deploy
 
-A versão em deploy do site pode ser acessada [aqui](schmoellerIuri.github.io)
+A versão em deploy do site pode ser acessada [aqui](https://schmoelleriuri.github.io/)
