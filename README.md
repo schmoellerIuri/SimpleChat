@@ -31,3 +31,7 @@ Nesta tela, o usuário pode acessar todas as suas conversas e enviar mensagens e
 Este modal permite iniciar conversas com qualquer usuário, bastando selecionar o nome de usuário desejado.
 
 ![Modal](https://github.com/schmoellerIuri/SimpleChatFront/blob/master/images/modal.png)
+
+## Versão em deploy
+
+A versão em deploy do site pode ser acessada [aqui](schmoellerIuri.github.io)
