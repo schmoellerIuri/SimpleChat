@@ -11,3 +11,8 @@ A linguagem utilizada foi o Javascript para a funcionalidade, e a estruturação
 Requisições foram feitas por chamadas AJAX ou com o objeto XMLHttpRequest do JavaScript. A interação do JS com o DOM foi feita por meio do JQuery.
 
 ## Tela de login
+
+Possui os campos de username e senha para realizar o login. Também disponibiliza o acesso para a tela de cadastro de novos usuários. Caso o login seja sucedido, levará a tela de conversas.
+
+![Tela Login](https://github.com/schmoellerIuri/SimpleChatFront/blob/master/images/loginscreen.png)
+
