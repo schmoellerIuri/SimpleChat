@@ -16,3 +16,20 @@ Possui os campos de username e senha para realizar o login. Também disponibiliz
 
 ![Tela Login](https://github.com/schmoellerIuri/SimpleChatFront/blob/master/images/loginscreen.png)
 
+## Tela de cadastros
+
+A tela requisita um username e a senha e sua confirmação. Caso a confirmação seja diferente da senha, um aviso será mostrado na tela, assim como quando houver uma tentativa de cadastro de username inválido. Caso o usuário seja criado com sucesso, redirecionará para a pagina de conversas.
+
+![Tela de cadastro](https://github.com/schmoellerIuri/SimpleChatFront/blob/master/images/cadastro.png)
+
+## Tela de conversas
+
+A tela de conversas permite que o usuário acesse todas as suas conversas e envie mensagens em tempo real para qualquer outro usuário. Além disso, permite a realização do logout e abrir o modal para adicionar novas conversas.
+
+![Tela de conversas](https://github.com/schmoellerIuri/SimpleChatFront/blob/master/images/conversations-2.png)
+
+## Modal de adição de conversas
+
+Permite iniciar conversas com qualquer usuário, basta apenas selecionar o username desejado.
+
+![Modal](https://github.com/schmoellerIuri/SimpleChatFront/blob/master/images/modal.png)
