@@ -1,0 +1,419 @@
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+  color: #ffffff;
+  background-color: #21222c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  height: 95%;
+  justify-content: start;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.conversas {
+  flex : 2;
+  top: 0; 
+  left: 0; 
+  height: 100%; 
+  background-color: #21222c;
+}
+
+.usuario-header{
+  width: 100%;
+  height: 7.5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #2c2f3b;
+  font-weight: bold;
+  background-color: #2b2b35;
+}
+
+.sair{
+  background-color: rgb(255, 67, 67);
+  width : 7.5%; 
+  height : 50%; 
+  border-radius: 0.5rem;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.sair:hover{
+  background-color: #fd5454;
+  cursor: pointer;
+}
+
+.botao-logout{
+  width: 10%;
+}
+
+.header-conversas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #2c2f3b;
+  height: 7.5%;
+}
+
+#conversaInput {
+  width: 80%;
+  height: 30%;
+  border: none;
+  border-radius: 1rem;
+  background-color: #282a36;
+  color: #ffff;
+  font-weight: bold;
+  padding: 10px;
+  font-size: 16px;
+}
+
+#conversaInput:focus {
+  outline: none;
+}
+
+.conversas ul {
+  height: 77.5%;
+  overflow-y: auto;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.conversas ul li {
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  padding: 10px;
+  border-bottom: 1px solid #2c2f3b;
+  cursor: pointer;
+  height: 50px;
+}
+
+.conversas ul li:hover {
+  background-color: #282a36;
+}
+
+.adicionar-conversas {
+  height: 7.5%;
+  width: 100%;
+  border-bottom: 1px solid #2c2f3b;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.adicionar-conversas button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  border-radius: 1rem;
+}
+
+.adicionar-conversas button:hover {
+  background-color: #282a36;
+}
+
+.adicionar-conversas button img {
+  height: 40%;
+  width: 50%;
+}
+
+.adicionar-conversas p {
+  flex: 7;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.mensagens-header{
+  width: 100%;
+  height: 7.5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: bold;
+  background-color:  #2b2b35;
+  border-bottom: 1px solid #2c2f3b;
+}
+
+.mensagens-container{
+  height: 85%;
+  overflow-y: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.mensagens {
+  flex: 5;
+  background-color: #282a36;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  padding-left: 20px;
+}
+
+.imagem-conversa {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+}
+
+.imagem-conversa img {
+  height: 20%;
+  width: 20%;
+}
+
+.imagem-conversa p {
+  font-size: 24px;
+  margin-top: 20px;
+}
+
+.message {
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.received-message {
+  background-color: #f0f0f0c5;
+  color: #333333;
+  border-radius: 10px;
+  padding: 10px;
+  max-width: 60%;
+}
+
+.sent-message {
+  background-color: #3575fd;
+  color: #333333;
+  border-radius: 10px;
+  padding: 10px;
+  max-width: 60%;
+}
+
+.input-box{
+  width: 100%;
+  height: 7.5%;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background-color: #282a36;
+}
+
+.input-box input[type="text"] {
+  flex-grow: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  background-color: #21222c;
+  color: #ffff;
+  font-weight: bold;
+  height: 50%;
+}
+
+.input-box input[type="text"]:focus {
+  outline: none;
+}
+
+.input-box button {
+  margin-left: 10px;
+  padding: 10px 20px;
+  border: none;
+  background-color: transparent;
+  color: #ffffff;
+  font-weight: bold;
+  cursor: pointer;
+  height: 75%;
+  border-radius: 1rem;
+}
+
+.input-box button:hover{
+  background-color: #21222c;
+}
+
+.input-box button img {
+  height: 75%;
+  width: 100%;
+}
+
+.modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #21222c;
+  border-radius: 0.5rem;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #282a36;
+  width: 600px;
+  height: 500px;
+}
+
+.close {
+  display: flex;
+  justify-content: center;
+  color: #ffffff;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  width: 5%;
+  border-radius: 0.5rem;
+  background-color: rgb(252, 51, 51);
+}
+
+.close:hover,
+.close:focus {
+  background-color: rgb(255, 83, 83);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.usuarios {
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  align-items: center;
+  width: 100%;
+  justify-content: center;
+}
+
+#userNameInput {
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  background-color: #282a36;
+  color: #ffff;
+  font-weight: bold;
+  width: 80%;
+}
+
+#userNameInput:focus {
+  outline: none;
+}
+
+.tabela-usuarios {
+  width: 80%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  row-gap: 5px;
+}
+
+.usuarios p {
+  font-weight: bold;
+  align-self: flex-start;
+  height: 10%;
+  margin: 0;
+  padding: 0;
+}
+
+#usuarios-list {
+  overflow-y: auto;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  height: 300px;
+  width: 100%;
+}
+
+#usuarios-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 50px;
+  width: 90%;
+  border-radius: 0.5rem;
+  background-color: #282a36;
+  padding: 0 10px;
+  margin-bottom: 10px;
+}
+
+#usuarios-list li:hover {
+  background-color: #21222c;
+  cursor: pointer;
+}
+
+#criar-conversa{
+  float: right;
+  margin-right: 10px;
+  font-weight: bold;
+  background-color: transparent;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  border-radius: 1rem;
+  height: 40px;
+  width: 100px;
+}
+
+#criar-conversa:hover{
+  background-color: #ffffff;
+  color: #21222c;
+  cursor: pointer;
+}
+
+/* Estilo da barra de rolagem */
+::-webkit-scrollbar {
+  -webkit-width: 8px; /* Largura da barra de rolagem */
+  opacity: 0; /* Opacidade inicial - torna a barra de rolagem invisível */
+  transition: opacity 0.3s; /* Adiciona uma transição suave para a propriedade opacity */
+}
+
+/* Estilo do polegar da barra de rolagem */
+::-webkit-scrollbar-thumb {
+  -webkit-background-color: #888; /* Cor de fundo do polegar */
+  -webkit-border-radius: 4px; /* Raio de borda do polegar */
+}
+
+/* Estilo do polegar da barra de rolagem quando estiver em hover */
+::-webkit-scrollbar-thumb:hover {
+  -webkit-background-color: #555; /* Cor de fundo do polegar em hover */
+}
+
+/* Aplica a opacidade quando o mouse estiver fora da barra de rolagem */
+::-webkit-scrollbar:hover,
+::-webkit-scrollbar-thumb:hover {
+  opacity: 1; /* Torna a barra de rolagem visível novamente */
+}

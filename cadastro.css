@@ -1,0 +1,80 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+    display: flex;
+    align-items: center;
+}
+
+.cadastro-box {
+    width: 27.5%;
+    height: 79%;
+    border-radius: 1rem;
+    background: #21222c;
+    color: #fff;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    padding: 70px 30px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 150px;
+}
+
+.inputs {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 20px;
+}
+
+.text-label {
+    color: #ffffff;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.cadastro-box input[type="text"],
+.cadastro-box input[type="password"] {
+    border-radius: 0.25rem;
+    border: 1px solid #fff;
+    background: transparent;
+    outline: none;
+    height: 35px;
+    width: 85%;
+    color: #ffffff;
+    font-size: 16px;
+    padding: 5px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 85%;
+}
+
+.buttons button {
+    border: none;
+    border-radius: 0.25rem;
+    border: 1px solid #fff;
+    background-color: transparent;
+    color: #fff;
+    width: 35%;
+    height: 50px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#cadastro-button:hover {
+    background-color: #fff;
+    color: #252529;
+}
+
+#cancelar-button:hover{
+    background-color: red;
+}
