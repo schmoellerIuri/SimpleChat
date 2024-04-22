@@ -38,22 +38,22 @@
         </div>
     </div>
 
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Selecione um usuário</h2>
-            <div class="usuarios">
-                <input type='text' id='userNameInput' placeholder='Buscar Usuario'>
-                <div class="tabela-usuarios">
-                    <p>Username</p>
-                    <ul id="usuarios-list">
+    <div id="overlay"></div>
 
-                    </ul>
-                </div>
+    <dialog id = "dialog-box">
+        <span class="close">&times;</span>
+        <h2>Selecione um usuário</h2>
+        <div class="usuarios">
+            <input type='text' id='userNameInput' placeholder='Buscar Usuario'>
+            <div class="tabela-usuarios">
+                <p>Username</p>
+                <ul id="usuarios-list">
+
+                </ul>
             </div>
-            <button id = "criar-conversa" alt = "Adicionar uma nova conversa">Adicionar</button>
         </div>
-    </div>
+        <button id = "criar-conversa" alt = "Adicionar uma nova conversa">Adicionar</button>
+    </dialog>
 
     <script src="modal.js"></script>
 </body>

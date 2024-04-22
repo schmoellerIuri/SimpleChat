@@ -8,7 +8,7 @@ if (tkn === null) {
 	window.location.href = "index.html";
 }
 
-const modal = document.getElementById('myModal');
+const modal = document.getElementById('dialog-box');
 const span = document.getElementsByClassName('close')[0];
 const userFilter = document.getElementById('userNameInput');
 const divUsersList = document.getElementById('usuarios-list');
@@ -61,18 +61,14 @@ Http.onreadystatechange = (e) => {
 }
 
 span.onclick = function () {
+	$('overlay').fadeOut();
 	if (selectedUserId !== null) {
 		let oldUser = document.getElementById(selectedUserId + 'user');
 		oldUser.style.border = '1px solid #282a36';
 		selectedUserId = null;
 	}
 
-	modal.style.display = 'none';
-}
-
-window.onclick = function (event) {
-	if (event.target == modal)
-		modal.style.display = 'none';
+	modal.close();
 }
 
 userFilter.onkeyup = function (event) {
@@ -136,7 +132,7 @@ btnCriarConversa.onclick = function (event) {
 		}
 
 		if (Http.readyState == 4 && Http.status == 200) {
-			modal.style.display = 'none';
+			modal.close();
 			window.location.href = "conversations.html?id=" + loggedUserId.toString();
 		}
 		selectedUserId = null;

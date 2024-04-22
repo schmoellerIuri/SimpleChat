@@ -53,13 +53,11 @@ $(document).ready(function () {
         });
     };
 
-    const modal = document.getElementById('myModal');
-
-    modal.style.display = 'none';
 
     $("#adicionar-conversa-button").click(function (event) {
-        var modal = document.getElementById('myModal');
-        modal.style.display = 'block';
+        var modal = document.getElementById('dialog-box');
+        $('overlay').fadeIn();
+        modal.showModal();
     });
 
     $.ajax({
