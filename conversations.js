@@ -30,7 +30,7 @@ socket.onmessage = function (event) {
         updateHtmlMensagens(currentSelectedConversationId, divMensagens);
     }
     else if (!isNaN(mensagemRecebida)){
-        window.location.href = "conversas.html?id=" + userId.toString();
+        window.location.href = "conversations.html?id=" + userId.toString();
     }
 
 };
