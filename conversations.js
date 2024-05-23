@@ -115,7 +115,8 @@ $(document).ready(function () {
         var promises = [];
 
         conversations.forEach(function (conversa) {
-            var promise = new Promise(function (resolve, reject) {
+            promises = [];
+            let promise = new Promise(function (resolve, reject) {
                 $.ajax({
                     url: Settings.URL + "api/Usuario/" + conversa.idUser1,
                     type: "GET",
@@ -158,15 +159,16 @@ $(document).ready(function () {
             });
 
             promises.push(promise);
+
+            Promise.all(promises).then(function () {
+                nomeUsuario = (conversa.user1.id == userId) ? conversa.user2.username : conversa.user1.username;
+                adicionarConversa(conversa.id, nomeUsuario, $(".conversas ul"));
+            }).catch(function () {
+                // lógica de tratamento de erro
+            });
         });
 
-        Promise.all(promises).then(function () {
-            // após as duas chamadas AJAX serem completadas, atualiza a lista de conversas
-            conversationsList = conversations;
-            atualizarListaConversas();
-        }).catch(function () {
-            // lógica de tratamento de erro
-        });
+
     }
 
     function atualizarListaConversas() {
@@ -176,9 +178,12 @@ $(document).ready(function () {
         // atualiza a lista de conversas na interface com o usuário
         conversationsList.forEach(function (conversa) {
             let nomeUsuario = (conversa.user1.id == userId) ? conversa.user2.username : conversa.user1.username;
-
-            listaConversas.append("<li id = " + conversa.id.toString() + ">" + nomeUsuario + "</li>");
+            adicionarConversa(conversa.id, nomeUsuario, listaConversas);        
         });
+    }
+
+    function adicionarConversa(id, nomeUsuario, listaConversas) { 
+        listaConversas.append("<li id = " + id + ">" + nomeUsuario + "</li>");
     }
 });
 
@@ -225,7 +230,6 @@ async function buildHtmlMensagens(idConversa, div) {
     listaMensagens = listaMensagens.concat(await updateHtmlMensagens(idConversa, null));
 
     buildHtmlInputBox(div, listaMensagens);
-
 }
 
 async function updateHtmlMensagens(idConversa, div) {
