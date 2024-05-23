@@ -29,6 +29,9 @@ socket.onmessage = function (event) {
     if (mensagemRecebida === currentSelectedConversationId && divMensagens !== null) {
         updateHtmlMensagens(currentSelectedConversationId, divMensagens);
     }
+    else if (!isNaN(mensagemRecebida)){
+        window.location.href = "conversas.html?id=" + userId.toString();
+    }
 
 };
 
@@ -298,8 +301,3 @@ function SendMessage(inputText) {
         }
     });
 }
-
-
-
-
-
