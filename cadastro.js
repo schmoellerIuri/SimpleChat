@@ -2,92 +2,89 @@ class Settings {
     static URL = "https://api-simplechat.azurewebsites.net/"; 
 }
 
-$(document).ready(function () {
-    const http = new XMLHttpRequest();
-    const url = Settings.URL + "api/Usuario/login";
-    http.open("POST", url);
-    http.setRequestHeader("Content-Type", "application/json");
+const divPassword = document.getElementById("inputPassword");
+const divUsername = document.getElementById("inputUsername");
+const divConfirmPw = document.getElementById("inputConfirmPw");
+const divError = document.getElementById("error");
+const cadastrarButton = document.getElementById("cadastro-button");
 
-    http.onreadystatechange = (e) => {
-        if (http.readyState == 4 && http.status == 200) {
-            let response = JSON.parse(http.response);
-            sessionStorage.setItem("token", response.token);
-            window.location.href = "conversations.html?id=" + response.id;
-        }
-    };
+function cadastroButtonClick(event) {
+    event.preventDefault();
 
-    $("#cadastro-button").click(function (event) {
+    const username = divUsername.value;
+    const password = divPassword.value;
 
-        event.preventDefault();
-        const username = $("#inputUsername").val();
-        const password = $("#inputPassword").val();
+    if(!validateForm()){
+      alert("Dados inválidos");
+      return;
+    }
 
-        $.ajax({
-            url: Settings.URL + "api/Usuario",
-            type: "POST",
-            data: JSON.stringify({ username: username, password: password }),
-            contentType: "application/json",
-            success: function (response) {
-                // lógica de sucesso
-                http.send(JSON.stringify({ username: username, password: password }));
-            },
-            error: function (xhr) {
-                // lógica de erro
-                var errorMessage = xhr.responseText ? xhr.responseText : "Erro desconhecido";
-                $("#error").html(errorMessage);
-                $("#error").show();
-            }
-        });
-    });
+    const overlay = document.getElementById("overlay");
+    overlay.style.display = 'flex';
 
-    $("#cancelar-button").click(function (event) {
-        event.preventDefault();
-        window.location.href = "index.html";
-    });
+    axios.post(Settings.URL + "api/Usuario", { 
+      username: username, 
+      password: password 
+	  })
+	  .then(function (response) {
+      login(username,password);
+	  })
+	  .catch(function (error) {
+      overlay.style.display = 'none';
+      const errorMessage = error.response.data ? error.response.data : "Erro desconhecido";
+      alert(errorMessage);
+	  });
+}
 
-    $('#cadastrar-button').prop("disabled", true);
+function validateForm(){
+    const username = divUsername.value;
+    const regex = /^[a-zA-Z0-9]{1,20}$/;
+    if (username.length > 0 && !regex.test(username)){
+        return false;
+    }
+    if(divPassword.value != divConfirmPw.value){
+        return false;
+    }
+    return true;
+}
 
-    $("#inputUsername").keyup(function () {
-        let username = $(this).val();
-        const regex = /^[a-zA-Z0-9]{1,20}$/;
+function login(username, password){
+    axios.post(Settings.URL + "api/Usuario/login", { 
+      username: username, 
+      password: password 
+      })
+	  .then(function (response) {
+      sessionStorage.setItem("token", response.data.token);
+      window.location.href = "conversations.html?id=" + response.data.id;
+	  })
+	  .catch(function (error) {
+      overlay.style.display = 'none';
+      const errorMessage = error.response.data ? error.response.data : "Erro desconhecido";
+      alert(errorMessage);
+	  });
+}
 
-        if (username.length > 0 && regex.test(username)) {
-            $('#cadastrar-button').prop("disabled", false);
-        } else {
-            $('#cadastrar-button').prop("disabled", true);
-        }
-    });
+function cancelarButtonClick(event) {
+    event.preventDefault();
+    window.location.href = "index.html";
+}
 
-    $("#inputPassword").keyup(function () {
-        let confirmPw = $("#inputConfirmPw").val();
-        let passwordInput = $(this).val();
+function passwordKeyUp() {
+    let passwordInput = divPassword.value;
+    let confirmPw = divConfirmPw.value;
 
-        if (passwordInput.length > 0 && confirmPw !== passwordInput) {
-            $('#inputConfirmPw').css("borderColor", "red");
-            $("#error").html("Confirmação de senha não coincide com a original");
-            $("#error").show();
-            $('#cadastrar-button').prop("disabled", true);
-        } else {
-            $('#inputConfirmPw').css("borderColor", "");
-            $("#error").hide();
-            $('#cadastrar-button').prop("disabled", false);
-        }
-    });
+    checkPasswordMatching(passwordInput,confirmPw);
+}
 
-    $("#inputConfirmPw").keyup(function () {
-        let passwordInput = $("#inputPassword").val();
-        let confirmPw = $(this).val();
-
-        if (confirmPw.length > 0 && confirmPw !== passwordInput) {
-            $(this).css("borderColor", "red");
-            $("#error").html("Confirmação de senha não coincide com a original");
-            $("#error").show();
-            $('#cadastrar-button').prop("disabled", true);
-        } else {
-            $(this).css("borderColor", "");
-            $("#error").hide();
-            $('#cadastrar-button').prop("disabled", false);
-        }
-    });
-
-});
+function checkPasswordMatching(password,confirmation){
+    if (password.length > 0 && confirmation !== password) {
+        divConfirmPw.style.borderColor = 'red';
+        divPassword.style.borderColor = 'red';
+        divError.textContent = "Confirmação de senha não coincide com a original";
+        divError.style.display = 'block';
+    } else {
+        divConfirmPw.style.borderColor = '';
+        divPassword.style.borderColor = '';
+        divError.style.display = 'none';
+    }
+}

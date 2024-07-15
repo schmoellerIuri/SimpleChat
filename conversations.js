@@ -14,8 +14,6 @@ if (token === null) {
 
 const userId = new URLSearchParams(window.location.search).get('id');
 
-// Cria a conexão WebSocket
-
 const socket = new WebSocket(`wss://api-simplechat.azurewebsites.net/ws?userId=${userId}`);
 
 socket.onmessage = function (event) {

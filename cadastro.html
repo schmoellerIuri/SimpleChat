@@ -4,9 +4,8 @@
     <link rel="stylesheet" href="cadastro.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <title>Cadastro</title>
-    <script src="cadastro.js"></script>
 </head>
 <body>
     <div class="cadastro-box">
@@ -15,14 +14,18 @@
         </div>
         <div class="inputs">
             <input type="text" id="inputUsername" placeholder="Username">
-            <input type="password" id="inputPassword" placeholder="Password">
-            <input type="password" id="inputConfirmPw" placeholder="Confirm Password">
+            <input type="password" id="inputPassword" placeholder="Password" onkeyup="passwordKeyUp()">
+            <input type="password" id="inputConfirmPw" placeholder="Confirm Password" onkeyup="passwordKeyUp()">
             <div class = "buttons">
-                <button type="button" id="cadastro-button">Cadastrar</button>
-                <button type="button" id="cancelar-button">Cancelar</button>
+                <button type="button" id="cadastro-button" onclick="cadastroButtonClick(event)">Cadastrar</button>
+                <button type="button" id="cancelar-button" onclick="cancelarButtonClick(event)">Cancelar</button>
             </div>
             <div id="error" style="display: none; color: red;"></div>
         </div>
     </div>
+    <div id = "overlay">
+        <img src="images/Spinner@1x-1.0s-200px-200px.gif">
+    </div>
+    <script src="cadastro.js"></script>
 </body>
 </html>

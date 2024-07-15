@@ -8,6 +8,8 @@ body {
 .cadastro-box {
     width: 27.5%;
     height: 79%;
+    min-width: 400px;
+    min-height: 600px;
     border-radius: 1rem;
     background: #21222c;
     color: #fff;
@@ -77,4 +79,17 @@ body {
 
 #cancelar-button:hover{
     background-color: red;
+}
+
+#overlay {
+    display: none;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #21222c;
+    z-index: 2;
 }

@@ -2,41 +2,39 @@ class Settings {
     static URL = "https://api-simplechat.azurewebsites.net/"; 
 }
 
-$(document).ready(function () {
-	$("#login-button").click(function (event) {
+function loginButtonClick(event) {
+	event.preventDefault();
+	Login();
+}
+
+function keyPressed(event) {
+	if (event.key == 'Enter') {
 		event.preventDefault();
 		Login();
-	});
-
-	$("#inputPassword").keypress(function (event) {
-		if (event.key == 'Enter') {
-			event.preventDefault();
-			Login();
-		}
-	});
-
-	function Login() {
-		const username = $("#inputUsername").val();
-		const password = $("#inputPassword").val();
-		$.ajax({
-			url: Settings.URL + "api/Usuario/login",
-			type: "POST",
-			data: JSON.stringify({ username: username, password: password }),
-			contentType: "application/json",
-			success: function (response) {
-				// lógica de sucesso
-				sessionStorage.setItem("token", response.token);
-				window.location.href = "conversations.html?id=" + response.id;
-			},
-			error: function (xhr) {
-				// lógica de erro
-				var errorMessage = xhr.responseText ? xhr.responseText : "Erro desconhecido";
-				$("#error").html(errorMessage);
-				$("#error").show();
-			}
-		});
 	}
-});
+}
+
+function Login() {
+	const username = document.getElementById("inputUsername").value;
+	const password = document.getElementById("inputPassword").value;
+	const overlay = document.getElementById("overlay");
+
+	overlay.style.display = 'flex';
+
+	axios.post(Settings.URL + "api/Usuario/login", { 
+		username: username, 
+		password: password 
+	  })
+	  .then(function (response) {
+		sessionStorage.setItem("token", response.data.token);
+		window.location.href = "conversations.html?id=" + response.data.id;
+	  })
+	  .catch(function (error) {
+		overlay.style.display = 'none';
+		const errorMessage = error.response.data ? error.response.data : "Erro desconhecido";
+		alert(errorMessage);
+	  });
+}
 
 
 
