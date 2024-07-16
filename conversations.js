@@ -43,8 +43,8 @@ axios.get(urlUsr, {
     const username = document.querySelector(".usuario-header");
     username.innerHTML = "<p> Bem vindo " + user.username + " !</p>" + "<div class = 'sair'><img src = 'images/logout.png' style = width = 80%; height = 80%;></div>";
     username.querySelector(".sair").addEventListener("click", function (event) {
-        window.location.href = "index.html";
         socket.close();
+        window.location.href = "index.html";
     });
 }).catch((error) => {
     if (error.response.status == 401) {
