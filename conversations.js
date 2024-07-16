@@ -1,5 +1,5 @@
 class Settings {
-    static URL = "https://api-simplechat.azurewebsites.net/"; 
+    static URL = "https://api-simplechat.azurewebsites.net/";
 }
 
 let conversations = null;
@@ -27,186 +27,133 @@ socket.onmessage = function (event) {
     if (mensagemRecebida === currentSelectedConversationId && divMensagens !== null) {
         updateHtmlMensagens(currentSelectedConversationId, divMensagens);
     }
-    else if (!isNaN(mensagemRecebida)){
+    else if (!isNaN(mensagemRecebida)) {
         window.location.href = "conversations.html?id=" + userId.toString();
     }
-
 };
 
-$(document).ready(function () {
-    const HttpUsr = new XMLHttpRequest();
-    const urlUsr = Settings.URL + 'api/Usuario/' + userId.toString();
-    HttpUsr.open("GET", urlUsr);
-    HttpUsr.setRequestHeader("Authorization", "Bearer " + token.toString());
+const urlUsr = Settings.URL + 'api/Usuario/' + userId.toString();
 
-    HttpUsr.send();
-
-    HttpUsr.onreadystatechange = (e) => {
-        if (HttpUsr.status == 401) {
-            window.location.href = "index.html";
-        }
-
-        const user = JSON.parse(HttpUsr.responseText);
-        const username = document.querySelector(".usuario-header");
-        username.innerHTML = "<p> Bem vindo " + user.username + " !</p>" + "<div class = 'sair'><img src = 'images/logout.png' style = width = 80%; height = 80%;></div>";
-        username.querySelector(".sair").addEventListener("click", function (event) {
-            window.location.href = "index.html";
-            socket.close();
-        });
-    };
-
-
-    $("#adicionar-conversa-button").click(function (event) {
-        var modal = document.getElementById('dialog-box');
-        $('overlay').fadeIn();
-        modal.showModal();
-    });
-
-    $.ajax({
-        url: Settings.URL + "api/Conversa/" + userId.toString(),
-        type: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + token.toString()
-        },
-        success: function (response) {
-            conversations = response;
-            carregaConversas();
-        },
-        error: function (xhr) {
-            if (xhr.status == 401)
-                window.location.href = "index.html";
-        }
-    });
-
-    $("#conversas-list").click(function (event) {
-        if (isNaN(event.target.id))
-            return;
-
-        if (currentSelectedConversationId !== null) {
-            let conversaAntiga = document.getElementById(currentSelectedConversationId);
-            conversaAntiga.style = "";
-        }
-
-        currentSelectedConversationId = event.target.id;
-
-        const divConversa = document.getElementById(currentSelectedConversationId);
-        divConversa.style.backgroundColor = '#282a36';
-
-        const divMensagens = document.querySelector(".mensagens");
-
-        buildHtmlMensagens(currentSelectedConversationId, divMensagens);
-    });
-
-    const conversaInput = document.getElementById("conversaInput");
-
-    conversaInput.onkeyup = function (event) {
-        event.preventDefault();
-        conversationsList = conversations.filter(function (conversa) {
-            let nomeUsuario = (conversa.user1.id == userId) ? conversa.user2.username : conversa.user1.username;
-            return nomeUsuario.toLowerCase().includes(event.target.value.toLowerCase());
-        });
-        atualizarListaConversas();
-    };
-
-    function carregaConversas() {
-        var promises = [];
-
-        conversations.forEach(function (conversa) {
-            promises = [];
-            let promise = new Promise(function (resolve, reject) {
-                $.ajax({
-                    url: Settings.URL + "api/Usuario/" + conversa.idUser1,
-                    type: "GET",
-                    contentType: "application/json",
-                    headers: {
-                        "Authorization": "Bearer " + token.toString()
-                    },
-                    success: function (response) {
-                        conversa.user1 = response;
-                        resolve();
-                    },
-                    error: function (xhr) {
-                        if (xhr.status == 401)
-                            window.location.href = "index.html";
-                        reject();
-                    }
-                });
-            });
-
-            promises.push(promise);
-
-            promise = new Promise(function (resolve, reject) {
-                $.ajax({
-                    url: Settings.URL + "api/Usuario/" + conversa.idUser2,
-                    type: "GET",
-                    contentType: "application/json",
-                    headers: {
-                        "Authorization": "Bearer " + token.toString()
-                    },
-                    success: function (response) {
-                        conversa.user2 = response;
-                        resolve();
-                    },
-                    error: function (xhr) {
-                        if (xhr.status == 401)
-                            window.location.href = "index.html";
-                        reject();
-                    }
-                });
-            });
-
-            promises.push(promise);
-
-            Promise.all(promises).then(function () {
-                nomeUsuario = (conversa.user1.id == userId) ? conversa.user2.username : conversa.user1.username;
-                adicionarConversa(conversa.id, nomeUsuario, $(".conversas ul"));
-            }).catch(function () {
-                // lógica de tratamento de erro
-            });
-        });
-
-
+axios.get(urlUsr, {
+    headers: {
+        'Authorization': 'Bearer ' + token.toString()
     }
-
-    function atualizarListaConversas() {
-        const listaConversas = $(".conversas ul");
-        listaConversas.empty(); // Limpa a lista de conversas antes de atualizá-la
-
-        // atualiza a lista de conversas na interface com o usuário
-        conversationsList.forEach(function (conversa) {
-            let nomeUsuario = (conversa.user1.id == userId) ? conversa.user2.username : conversa.user1.username;
-            adicionarConversa(conversa.id, nomeUsuario, listaConversas);        
-        });
+}).then((response) => {
+    const user = response.data;
+    const username = document.querySelector(".usuario-header");
+    username.innerHTML = "<p> Bem vindo " + user.username + " !</p>" + "<div class = 'sair'><img src = 'images/logout.png' style = width = 80%; height = 80%;></div>";
+    username.querySelector(".sair").addEventListener("click", function (event) {
+        window.location.href = "index.html";
+        socket.close();
+    });
+}).catch((error) => {
+    if (error.response.status == 401) {
+        window.location.href = "index.html";
     }
-
-    function adicionarConversa(id, nomeUsuario, listaConversas) { 
-        listaConversas.append("<li id = " + id + ">" + nomeUsuario + "</li>");
+    else {
+        alert("Erro ao carregar usuário, tente novamente mais tarde.");
+        window.location.href = "index.html";
     }
 });
 
-async function getMensagens(idConversa) {
+axios.get(Settings.URL + "api/Conversa/" + userId.toString(),{
+    headers: {
+        'Authorization': 'Bearer ' + token.toString()
+    }
+}).then((response) => {
+    conversations = response.data;
+    carregaConversas();
+}).catch((error) => {
+    if (error.response.status == 401) {
+        window.location.href = "index.html";
+    }
+    else {
+        alert("Erro ao carregar conversas, tente novamente mais tarde.");
+        window.location.href = "index.html";
+    }
+});
 
-    let promise = new Promise(function (resolve, reject) {
-        $.ajax({
-            url: Settings.URL + "api/Mensagem/" + idConversa,
-            type: "GET",
-            contentType: "application/json",
-            headers: {
-                "Authorization": "Bearer " + token.toString()
-            },
-            success: function (response) {
-                resolve(response);
-            },
-            error: function (xhr) {
-                if (xhr.status == 401)
-                    window.location.href = "index.html";
-                reject();
-            }
+function conversasListClick(event) {
+    if (isNaN(event.target.id))
+        return;
+
+    if (currentSelectedConversationId !== null) {
+        let conversaAntiga = document.getElementById(currentSelectedConversationId);
+        conversaAntiga.style = "";
+    }
+
+    currentSelectedConversationId = event.target.id;
+
+    const divConversa = document.getElementById(currentSelectedConversationId);
+    divConversa.style.backgroundColor = '#282a36';
+
+    const divMensagens = document.querySelector(".mensagens");
+
+    buildHtmlMensagens(currentSelectedConversationId, divMensagens);
+}
+
+const conversaInput = document.getElementById("conversaInput");
+
+conversaInput.onkeyup = function (event) {
+    event.preventDefault();
+    conversationsList = conversations.filter(function (conversa) {
+        let nomeUsuario = (conversa.user1.id == userId) ? conversa.user2.username : conversa.user1.username;
+        return nomeUsuario.toLowerCase().includes(event.target.value.toLowerCase());
+    });
+    atualizarListaConversas();
+};
+
+function carregaConversas() {
+    const conversationsListHtml = document.querySelector(".conversas ul");
+
+    conversations.forEach(function (conversa) {
+
+        const promise = fetchUser(conversa.idUser1);
+
+        promise.then(function (response) {
+            conversa.user1 = response;
+            const newPromise = fetchUser(conversa.idUser2);
+            newPromise.then(function (newResponse) {
+                conversa.user2 = newResponse;
+                nomeUsuario = (conversa.user1.id == userId) ? conversa.user2.username : conversa.user1.username;
+                adicionarConversa(conversa.id, nomeUsuario, conversationsListHtml);
+            });
         });
     });
+}
 
-    return promise;
+async function fetchUser(id) {
+    const response = await axios.get(Settings.URL + "api/Usuario/" + id, {
+        headers: {
+            'Authorization': 'Bearer ' + token.toString()
+        }
+    });
+    return response.data;
+}
+
+function atualizarListaConversas() {
+    const listaConversas = document.querySelector(".conversas ul");
+    listaConversas.innerHTML = "";
+
+    conversationsList.forEach(function (conversa) {
+        let nomeUsuario = (conversa.user1.id == userId) ? conversa.user2.username : conversa.user1.username;
+        adicionarConversa(conversa.id, nomeUsuario, listaConversas);
+    });
+}
+
+function adicionarConversa(id, nomeUsuario, conversationsListHtml) {
+    const listItem = document.createElement("li");
+    listItem.id = id;
+    listItem.textContent = nomeUsuario;
+    conversationsListHtml.appendChild(listItem);
+}
+
+async function getMensagens(idConversa) {
+    return axios.get(Settings.URL + "api/Mensagem/" + idConversa.toString(), {
+        headers: {
+            'Authorization': 'Bearer ' + token.toString()
+        }
+    });
 }
 
 async function buildHtmlMensagens(idConversa, div) {
@@ -231,7 +178,8 @@ async function buildHtmlMensagens(idConversa, div) {
 }
 
 async function updateHtmlMensagens(idConversa, div) {
-    let mensagens = await getMensagens(idConversa);
+    const response = await getMensagens(idConversa);
+    let mensagens = response.data;
 
     let listaMensagens = [];
 
@@ -270,36 +218,45 @@ function buildHtmlInputBox(div, listaMensagens) {
 
     const inputText = document.getElementById("messageInput");
 
-    $("#sendButton").click(function (event) {
-        if (inputText.value != "") {
-            event.preventDefault();
-            SendMessage(inputText);
-        }
-    });
+    document.getElementById("sendButton").onclick = sendButtonClick;
 
-    $("#messageInput").keypress(function (event) {
-        if (event.key == 'Enter' && this.value != "") {
-            event.preventDefault();
-            SendMessage(this);
-        }
-    });
+    inputText.onkeydown = messageInputKeyDown;
 }
 
+function sendButtonClick(event) {
+    const inputText = document.getElementById("messageInput");
+    if (inputText.value != "") {
+        event.preventDefault();
+        SendMessage(inputText);
+    }
+}
+
+function messageInputKeyDown(event) {
+    if (event.key == 'Enter' && this.value != "") {
+        event.preventDefault();
+        SendMessage(this);
+    }
+}
+
+function adicionarConversaClick() {
+    var modal = document.getElementById('dialog-box');
+    document.getElementById("overlay").style.display = 'flex';
+    modal.style.display = 'flex';
+};
+
 function SendMessage(inputText) {
-    $.ajax({
-        url: Settings.URL + "api/Mensagem",
-        type: "POST",
-        data: JSON.stringify({ conversaId: currentSelectedConversationId, remetenteId: userId, conteudo: inputText.value }),
-        contentType: "application/json",
+    axios.post(Settings.URL + "api/Mensagem", {
+        conversaId: currentSelectedConversationId,
+        remetenteId: userId,
+        conteudo: inputText.value
+    }, {
         headers: {
-            "Authorization": "Bearer " + token.toString()
-        },
-        success: function (response) {
-            inputText.value = "";
-        },
-        error: function (xhr) {
-            if (xhr.status == 401)
-                window.location.href = "index.html";
+            'Authorization': 'Bearer ' + token.toString()
         }
+    }).then(() => {
+        inputText.value = "";
+    }).catch(function (error) {
+        if (error.response.status == 401)
+            window.location.href = "index.html";
     });
 }

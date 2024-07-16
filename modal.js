@@ -2,12 +2,6 @@ class SettingsModal {
     static URL = "https://api-simplechat.azurewebsites.net/"; 
 }
 
-const tkn = sessionStorage.getItem("token");
-
-if (tkn === null) {
-	window.location.href = "index.html";
-}
-
 const modal = document.getElementById('dialog-box');
 const span = document.getElementsByClassName('close')[0];
 const userFilter = document.getElementById('userNameInput');
@@ -17,58 +11,54 @@ var users = [];
 var usersConversationsIds = [];
 var selectedUserId = null;
 
-const Http = new XMLHttpRequest();
 const url = SettingsModal.URL + 'api/Usuario';
 
 const loggedUserId = new URLSearchParams(window.location.search).get('id');
-const HttpConversas = new XMLHttpRequest();
+
 const urlConversas = SettingsModal.URL + 'api/Conversa/' + loggedUserId.toString();
-HttpConversas.open("GET", urlConversas);
-HttpConversas.setRequestHeader("Authorization", "Bearer " + tkn.toString());
 
-HttpConversas.send();
-
-HttpConversas.onreadystatechange = (e) => {
-	if (HttpConversas.status == 401) {
-		window.location.href = "index.html";
-		return;
+axios.get(urlConversas, {
+	headers: {
+		'Authorization': 'Bearer ' + token.toString()
 	}
-
-	let conversations = JSON.parse(HttpConversas.responseText);
+}).then((response) => {
+	let conversations = response.data;
 	conversations.forEach(function (conversation) {
 		if (conversation.idUser1 == loggedUserId)
 			usersConversationsIds.push(conversation.idUser2);
 		else
 			usersConversationsIds.push(conversation.idUser1);
 	});
-	Http.open("GET", url);
-	Http.setRequestHeader("Authorization", "Bearer " + tkn.toString());
-	Http.send();
-}
-
-
-Http.onreadystatechange = (e) => {
-	if (HttpConversas.status == 401) {
-		window.location.href = "index.html";
-		return;
-	}
-
-	users = JSON.parse(Http.responseText);
-	users = users.filter(function (user) {
-		return user.id != loggedUserId && !usersConversationsIds.includes(user.id);
+	axios.get(url, {
+		headers:
+			{ 'Authorization': 'Bearer ' + token.toString() }
+	}).then((response) => {
+		users = response.data;
+		users = users.filter(function (user) {
+			return user.id != loggedUserId && !usersConversationsIds.includes(user.id);
+		});
+		ChangeList(users);
 	});
-	ChangeList(users);
-}
+}).catch((error) => {
+	if (error.response.status == 401) {
+		window.location.href = "index.html";
+	}
+	else {
+		alert("Erro ao carregar conversas, tente novamente mais tarde.");
+		window.location.href = "index.html";
+	}
+});
+
 
 span.onclick = function () {
-	$('overlay').fadeOut();
+	document.getElementById("overlay").style.display = 'none';
 	if (selectedUserId !== null) {
 		let oldUser = document.getElementById(selectedUserId + 'user');
 		oldUser.style.border = '1px solid #282a36';
 		selectedUserId = null;
 	}
 
-	modal.close();
+	modal.style.display = 'none';
 }
 
 userFilter.onkeyup = function (event) {
@@ -118,23 +108,23 @@ btnCriarConversa.onclick = function (event) {
 		idUser2: selectedUserId
 	};
 
-	const Httpcreate = new XMLHttpRequest();
 	const url = SettingsModal.URL + 'api/Conversa';
-	Httpcreate.open("POST", url);
-	Httpcreate.setRequestHeader("Content-Type", "application/json");
-	Httpcreate.setRequestHeader("Authorization", "Bearer " + tkn.toString());
-	Httpcreate.send(JSON.stringify(newConversation));
-
-	Httpcreate.onreadystatechange = (e) => {
-		if (HttpConversas.status == 401) {
-			window.location.href = "index.html";
-			return;
+	
+	axios.post(url, newConversation, {
+		headers: {
+			'Authorization': 'Bearer ' + token.toString()
 		}
-
-		if (Http.readyState == 4 && Http.status == 200) {
-			modal.close();
-			window.location.href = "conversations.html?id=" + loggedUserId.toString();
+	}).then((response) => {
+		modal.close();
+		window.location.href = "conversations.html?id=" + loggedUserId.toString();
+	}).catch((error) => {
+		if (error.response.status == 401) {
+			window.location.href = "index.html";
+		}
+		else {
+			alert("Erro ao criar conversa, tente novamente mais tarde.");
+			window.location.href = "index.html";
 		}
 		selectedUserId = null;
-	}
+	});
 }
