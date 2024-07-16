@@ -49,7 +49,6 @@ axios.get(urlConversas, {
 	}
 });
 
-
 span.onclick = function () {
 	document.getElementById("overlay").style.display = 'none';
 	if (selectedUserId !== null) {
