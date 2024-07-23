@@ -1,6 +1,6 @@
 # Simple Chat Frontend
 
-Este é o frontend de um serviço de webchat em tempo real. Para obter mais informações sobre o backend, acesse [aqui](https://github.com/schmoellerIuri/APISimpleChat). A versão em produção do site pode ser econtrada [aqui](https://schmoelleriuri.github.io/).
+Este é o frontend de um serviço de webchat em tempo real. Para obter mais informações sobre o backend, acesse [aqui](https://github.com/schmoellerIuri/APISimpleChat). A versão em produção do site pode ser econtrada [aqui](https://simple-chat-v1.azurewebsites.net/).
 
 ## Descrição detalhada do sistema
 
