@@ -48,6 +48,8 @@ axios.get(urlUsr, {
         window.location.href = "index.html";
     });
 }).catch((error) => {
+    if(socket.OPEN)
+        socket.close();
     if (error.response.status == 401) {
         window.location.href = "index.html";
     }
@@ -65,6 +67,8 @@ axios.get(Settings.URL + "api/Conversa/" + userId.toString(),{
     conversations = response.data;
     carregaConversas();
 }).catch((error) => {
+    if(socket.OPEN)
+        socket.close();
     if (error.response.status == 401) {
         window.location.href = "index.html";
     }
@@ -258,6 +262,8 @@ function SendMessage(inputText) {
         inputText.value = "";
     }).catch(function (error) {
         if (error.response.status == 401)
+            if(socket.OPEN)
+                socket.close();
             window.location.href = "index.html";
     });
 }
