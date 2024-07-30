@@ -9,7 +9,7 @@ O sistema consiste em um serviço de webchat com suporte para dispositivos deskt
 Para a funcionalidade, foi utilizada a linguagem JavaScript, enquanto a estruturação da página e o estilo foram feitos com HTML e CSS, respectivamente. Não foi empregado nenhum framework tanto para a parte gráfica quanto para a funcionalidade do sistema. As requisições foram feitas por meio da biblioteca AXIOS.
 
 O deploy do sistema foi feito via imagem da aplicação que está disponível no docker hub. Com a infraestrutura do Microsoft Azure a solução roda com um servidor nginx a partir do contêiner docker que é inicializado a partir da imagem no dockerhub.
-A imagem oficial está disponível em: [](https://hub.docker.com/repository/docker/schmoelleriuri/simple-chat-front/general).
+A imagem oficial está disponível em: [link](https://hub.docker.com/repository/docker/schmoelleriuri/simple-chat-front/general).
 
 ## Tela de login
 
