@@ -6,7 +6,10 @@ Este é o frontend de um serviço de webchat em tempo real. Para obter mais info
 
 O sistema consiste em um serviço de webchat com suporte para dispositivos desktop. Ele possui um sistema de autenticação no backend e é composto por três telas principais e um modal: login, cadastro, conversas e modal de adição de conversas. Cada usuário pode conversar com qualquer outro usuário, bastando buscar o username da pessoa desejada e iniciar a conversa instantaneamente.
 
-Para a funcionalidade, foi utilizada a linguagem JavaScript, enquanto a estruturação da página e o estilo foram feitos com HTML e CSS, respectivamente. Não foi empregado nenhum framework tanto para a parte gráfica quanto para a funcionalidade do sistema. As requisições foram feitas por meio da biblioteca AXIOS. A interação do JavaScript com o DOM foi realizada sem o emprego de qualquer framework.
+Para a funcionalidade, foi utilizada a linguagem JavaScript, enquanto a estruturação da página e o estilo foram feitos com HTML e CSS, respectivamente. Não foi empregado nenhum framework tanto para a parte gráfica quanto para a funcionalidade do sistema. As requisições foram feitas por meio da biblioteca AXIOS.
+
+O deploy do sistema foi feito via imagem da aplicação que está disponível no docker hub. Com a infraestrutura do Microsoft Azure a solução roda com um servidor nginx a partir do contêiner docker que é inicializado a partir da imagem no dockerhub.
+A imagem oficial está disponível em: [](https://hub.docker.com/repository/docker/schmoelleriuri/simple-chat-front/general).
 
 ## Tela de login
 
